@@ -142,49 +142,52 @@ checkoutbutton.addEventListener('click', async function (e) {
     const data = new URLSearchParams(formData);
     const objdata = Object.fromEntries(data);
 
-    // minta transaction token menggunakan ajax/fetch
-    try {
-        const response = await fetch('/php/payment.php', {
-            method: 'POST',
-            body: data,
-        });
-        const token = await response.text();
-        window.snap.pay(token, {
-            onSuccess: function (result) {
-                Swal.fire({
-                    title: 'Pembayaran Berhasil!',
-                    text: 'Terima kasih atas pembayaran Anda.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-                console.log(result);
-            },
-            onPending: function (result) {
-                Swal.fire({
-                    title: 'Pembayaran Pending!',
-                    text: 'Pembayaran Anda sedang diproses. Silakan tunggu konfirmasi.',
-                    icon: 'info',
-                    confirmButtonText: 'OK'
-                });
-                console.log(result);
-            },
-            onError: function (result) {
-                Swal.fire({
-                    title: 'Pembayaran Gagal!',
-                    text: 'Maaf, terjadi kesalahan saat memproses pembayaran Anda.',
-                    icon: 'error',
-                    confirmButtonText: 'Coba Lagi'
-                });
-                console.log(result);
-            },
-            onClose: function () {
-                Swal.fire({
-                    title: 'Pembayaran Dibatalkan!',
-                    text: 'Anda menutup popup sebelum menyelesaikan pembayaran.',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                });
-            }
+     const message = formatmessage(objdata);
+    window.open('https://api.whatsapp.com/send?phone=6282142944326&text=' + encodeURIComponent(message), '_blank');
+
+    // // minta transaction token menggunakan ajax/fetch
+    // try {
+    //     const response = await fetch('/php/payment.php', {
+    //         method: 'POST',
+    //         body: data,
+    //     });
+    //     const token = await response.text();
+    //     window.snap.pay(token, {
+    //         onSuccess: function (result) {
+    //             Swal.fire({
+    //                 title: 'Pembayaran Berhasil!',
+    //                 text: 'Terima kasih atas pembayaran Anda.',
+    //                 icon: 'success',
+    //                 confirmButtonText: 'OK'
+    //             });
+    //             console.log(result);
+    //         },
+    //         onPending: function (result) {
+    //             Swal.fire({
+    //                 title: 'Pembayaran Pending!',
+    //                 text: 'Pembayaran Anda sedang diproses. Silakan tunggu konfirmasi.',
+    //                 icon: 'info',
+    //                 confirmButtonText: 'OK'
+    //             });
+    //             console.log(result);
+    //         },
+    //         onError: function (result) {
+    //             Swal.fire({
+    //                 title: 'Pembayaran Gagal!',
+    //                 text: 'Maaf, terjadi kesalahan saat memproses pembayaran Anda.',
+    //                 icon: 'error',
+    //                 confirmButtonText: 'Coba Lagi'
+    //             });
+    //             console.log(result);
+    //         },
+    //         onClose: function () {
+    //             Swal.fire({
+    //                 title: 'Pembayaran Dibatalkan!',
+    //                 text: 'Anda menutup popup sebelum menyelesaikan pembayaran.',
+    //                 icon: 'warning',
+    //                 confirmButtonText: 'OK'
+    //             });
+    //         }
         });
     } catch (err) {
         console.log(err.message);
@@ -257,4 +260,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const formatMessage = (obj) => {
         return `Data Customer\nNama: ${obj.name}\nEmail: ${obj.email}\nNo HP: ${obj.phone}\nAlamat: ${obj.address}\nPesan:...\n\nTerima kasih telah menghubungi kami! Kami akan segera merespons pesan Anda.`;
     };
+
 });

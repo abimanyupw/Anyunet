@@ -143,7 +143,7 @@ checkoutbutton.addEventListener('click', async function (e) {
     const objdata = Object.fromEntries(data);
 
      const message = formatmessage(objdata);
-    window.open('https://api.whatsapp.com/send?phone=6282142944326&text=' + encodeURIComponent(message), '_blank');
+    window.open('https://api.whatsapp.com/send?phone=6285119546464&text=' + encodeURIComponent(message), '_blank');
 
     // // minta transaction token menggunakan ajax/fetch
     // try {
@@ -262,3 +262,4 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 });
+
